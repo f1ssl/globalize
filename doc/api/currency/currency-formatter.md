@@ -8,11 +8,11 @@ The returned function is invoked with one argument: the Number `value` to be for
 
 #### currency
 
-3-letter currency code as defined by ISO 4217, eg. `USD`.
+3-letter currency code as defined by ISO 4217, eg. `"USD"`.
 
 #### options.style
 
-Optional. String `symbol` (default), `accounting`, `code` or `name`. See [`.numberFormatter( [options] )`](../number/number-formatter.md)  for more options.
+Optional. String `"symbol"` (default), `"accounting"`, `"code"` or `"name"`. See [`.numberFormatter( [options] )`](../number/number-formatter.md)  for more options.
 
 #### value
 
@@ -20,9 +20,13 @@ Number to be formatted, eg. `9.99`.
 
 ### Example
 
+#### Prior to using it
+
 Prior to using any currency methods, you must load `cldr/main/{locale}/currencies.json`, `cldr/supplemental/currencyData.json`, and the CLDR content required by the number module. If using plural messages, you also must load the CLDR content required by the plural module. Read [CLDR content][] if you need more information.
 
 [CLDR content]: ../../../README.md#2-cldr-content
+
+#### Using the default options
 
 You can use the static method `Globalize.currencyFormatter()`, which uses the default locale.
 
@@ -34,7 +38,6 @@ formatter = Globalize.currencyFormatter( "USD" );
 
 formatter( 9.99 );
 // > "$9.99"
-
 ```
 
 You can use the instance method `.currencyFormatter()`, which uses the instance locale.
@@ -61,6 +64,8 @@ For comparison, follow the formatting output of different symbols in different l
 | `.currencyFormatter( "JPY" )( 1 )` | `¥1`         | `1 ¥`       | `JP¥ 1`      |
 | `.currencyFormatter( "GBP" )( 1 )` | `£1.00`      | `1,00 £`    | `£ 1.00`     |
 | `.currencyFormatter( "BRL" )( 1 )` | `R$1.00`     | `1,00 R$`   | `R$ 1.00`    |
+
+#### Using `options.style`
 
 For the accounting variation of the symbol format, use `style: "accounting"`.
 
@@ -109,6 +114,8 @@ formatter( 9.99 );
 // > "9.99 USD"
 ```
 
+#### Using numeric options
+
 Override the number of digits, grouping separators, rounding function or any other [`.numberFormatter()` options](../number/number-formatter.md).
 
 ```javascript
@@ -130,6 +137,8 @@ formatter = Globalize.currencyFormatter( "USD", {
 formatter( 1.491 );
 // > "$1.50"
 ```
+
+#### Performance note on loops
 
 For improved performance on iterations, first create the formatter. Then, reuse it on each loop.
 
